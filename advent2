@@ -1,0 +1,92 @@
+using System;
+using System.IO;
+using System.Linq;
+using System.Net;
+					
+public class Program
+{
+	public static void Main()
+	{
+		
+		//var result = advent2p1();
+	    //Console.WriteLine(" CheckSumt : " + result);
+		var result2 = advent2p2();
+	    
+	}
+	
+	public static int advent2p2()
+	{
+		var url ="https://raw.githubusercontent.com/Mokash/C/master/input2p2.txt";
+	    var textFromFile = (new WebClient()).DownloadString(url).Trim();
+	    string[] main = textFromFile.Split('\n');
+		Console.WriteLine(main.Length);
+		var index =0;
+		foreach (var line in main)
+		{
+				  
+				   var chr1 = line.ToCharArray();
+		       for(int ix = 0; ix < main.Length -1; ix++) 
+				   {
+				    var ct =0; 
+					var chr2 = main[ix].ToCharArray();
+		     		   for (int ie = 0; ie < chr1.Length -1; ie++) 
+			        	   { 	  
+					         if(chr1[ie] != chr2[ie])
+							 {ct++;
+							 index = ie;
+							 }	        }
+				   if(ct ==1 )
+				   {
+					   var res = line.Remove(index,1);
+					   Console.WriteLine("The common is: " + line + " and " +main[ix]);
+					   Console.WriteLine("The result are: " + res);
+				   }
+			   }
+		} 
+		return 0;
+	}
+	
+	public static int advent2p1()
+	{
+	int ct1 = 0;
+	int ct2 = 0;
+	var url ="https://raw.githubusercontent.com/Mokash/C/master/input2.txt";
+	var textFromFile = (new WebClient()).DownloadString(url).Trim();
+	string[] main = textFromFile.Split('\n');
+		foreach (var line in main)
+		{
+			 
+		                var result = line.GroupBy(c => c)
+                                  .OrderBy(c => c.Key)
+                                  .ToDictionary(grp => grp.Key, grp => grp.Count()).ToList();
+			            result.RemoveAll(v=>v.Value <= 1 || v.Value > 3);
+			            if(result.Any(r=>r.Value ==3))
+							ct1++;
+			            if(result.Any(r=>r.Value ==2))
+			                ct2++;
+		}
+	return ct1 * ct2;
+	}
+	
+	 public static int advent2(int nr)
+        {
+		 int ct = 0;
+            //var input = System.IO.File.ReadAllText(@"C:\workspaces\input2.txt").Trim();
+            using (var reader = new StreamReader(@"C:\workspaces\input2.txt"))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    var result = line.GroupBy(c => c)
+                                  .OrderBy(c => c.Key)
+                                  .ToDictionary(grp => grp.Key, grp => grp.Count()).ToList();
+                        foreach(var itm in result)
+						{ 
+							if (itm.Value == nr)
+							   ct++;
+						}
+				}
+            }
+		 return ct;
+}
+}
