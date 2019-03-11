@@ -5,3 +5,32 @@
   <heading>Reminder</heading>
   <body>Don't forget me this weekend!</body>
 </note>
+
+
+
+https://stackoverflow.com/questions/4791794/client-to-send-soap-request-and-receive-response
+
+        /// <summary>
+        /// postxmlFile
+        /// </summary>
+        /// <param name="xmlUrl"></param>
+        [Route("PostXmlFile/{xmlUrl}")]
+        [HttpPost]
+        public string PostXmlFile(string xmlUrl)
+        {
+            //xmlUrl = "https://raw.githubusercontent.com/Mokash/AoC/master/test.xml";
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlUrl);
+            var str = xmlDoc.InnerXml;
+            return str;
+            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(xmlUrl);
+            //request.ContentType = "text/xml; encoding='utf-8'";
+            //request.Method = "POST";
+
+            //// Reading data as XML string to log to files - In case message structure is changed
+            //var xmlDoc = new XmlDocument();
+            //xmlDoc.Load(xmlUrl);
+            //var str = xmlDoc.InnerXml;
+            //// Convert to model
+            ////var model = XMLHelper.FromXml<trackermessages>(str);
+        }
